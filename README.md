@@ -28,6 +28,8 @@ The workflow has 3 steps / job templates chained together:
 
 Takes the original input (extra vars), generate a random hostname, saving this extra info (called "artefacts") using the `set_stats` module. Once `set_stats` has been called, the vars are going to live for the duration of the workflow, you don't have to use set_stats at every steps of the workflow.
 
+![](https://raw.githubusercontent.com/sebw/AAP2-workflow-artefact/refs/heads/master/step1.png)
+
 ### Step 2
 
 The vars and artefacts from the previous steps are now the extra vars for step 2. 
@@ -42,7 +44,10 @@ payload_original:
   app: jboss
 ```
 
+![](https://raw.githubusercontent.com/sebw/AAP2-workflow-artefact/refs/heads/master/step2.png)
+
 This step just displays all the vars for you to play with.
+
 
 ### Step 3
 
