@@ -7,6 +7,7 @@
     ansible.builtin.add_host:
       hostname: '{{ generated_hostname }}'
       groups: temp_group
+      ansible_connection: ssh
 
 - name: do something against the in memory inventory
   hosts: temp_group
