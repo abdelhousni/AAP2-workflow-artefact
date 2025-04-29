@@ -6,4 +6,4 @@
   tasks:
     - name: Display all variables
       debug:
-        var: extra_vars
+        var: hostvars[inventory_hostname]
