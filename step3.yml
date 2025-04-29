@@ -10,6 +10,7 @@
       ansible_connection: ssh
 
   - name: Try to run something on the newly generated VM
-    debug:
-      msg: This is a test
+    dnf:
+      name: tcpdump
+      state: present
     delegate_to: temp_group
