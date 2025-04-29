@@ -32,7 +32,17 @@ Takes the original input (extra vars), generate a random hostname, saving this e
 
 The vars and artefacts from the previous steps are now the extra vars for step 2. 
 
-This step just displays all the vars
+```
+payload_extra:
+  generated_hostname: iv5cgtcv9q.labo.ovh
+payload_original:
+  requested_os: linux
+  vm_size: small
+  owner: Matt Hicks
+  app: jboss
+```
+
+This step just displays all the vars for you to play with.
 
 ### Step 3
 
@@ -40,15 +50,25 @@ We still have all the info (original + new data) as input.
 
 We store the new hostname created under step 1 in an "in memory inventory". 
 
-We can now run some automation against this temporary inventory
+We can now run some automation against this temporary inventory.
 
 ### Next steps?
 
-When the machine has been provisioned successfully, we can update our CMDB.
+When the machine has been provisioned successfully, we can update our CMDB / real inventory.
 
 ## Why not using a dynamic inventory?
 
-It is obviously possible to update the CMDB at the end of step 1, refresh the inventory in step 2 and run automation with a limit in step 3, but it is overall slower and doesn't necessarily provide any added value.
+It is obviously possible to update the CMDB at the end of step 1.  
+In step 2, you need to refresh the inventory and limit the automation to the newly created machine.
 
+Overall this can add a few minutes to your worfklows, while in memory takes under 1 second.
+
+In provisioning scenarios/workflows, I also believe it only makes sense to update the CMDB once the system is fully provisioned successfully.
+
+This prevents polluting the CMDB with bogus data if the provisioning fails.
+
+
+
+## Want a demo?
 
 If you want a live demo, reach out to swains@redhat.com.
