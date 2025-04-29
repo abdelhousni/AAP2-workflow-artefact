@@ -6,7 +6,12 @@
   - name: In memory inventory
     ansible.builtin.add_host:
       hostname: '{{ generated_hostname }}'
+      groups: temp_group
 
+- name: do something against the in memory inventory
+  hosts: temp_group
+  gather_facts: false
+  tasks:
   - name: Try to run something on the newly generated VM
     debug:
       msg: This is a test
