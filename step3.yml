@@ -5,7 +5,7 @@
   tasks:
   - name: In memory inventory
     ansible.builtin.add_host:
-      ansible_hostname: '{{ payload }}.{{ extra }}.{{ generated_hostname }}'
+      ansible_hostname: '{{ payload[extra][generated_hostname] }}'
       ansible_connection: ssh
       groups:
       - temp_group
