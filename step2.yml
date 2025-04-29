@@ -1,0 +1,9 @@
+---
+- name: Print all variables passed to the playbook
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Display all variables
+      debug:
+        var: vars
