@@ -4,4 +4,4 @@
   gather_facts: false
   tasks:
   - debug:
-      var: request
+      var: original_payload
