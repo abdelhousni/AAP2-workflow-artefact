@@ -6,4 +6,4 @@
   tasks:
     - name: Display all variables
       debug:
-        var: vars
+        var: extra_vars
