@@ -6,11 +6,12 @@
   - name: In memory inventory
     ansible.builtin.add_host:
       ansible_hostname: '{{ generated_hostname }}'
-      name: new_machine
       ansible_connection: ssh
+      groups:
+      - temp_group
 
   - name: Try to run something on the newly generated VM
     dnf:
       name: tcpdump
       state: present
-    delegate_to: new_machine
+    delegate_to: temp_group
