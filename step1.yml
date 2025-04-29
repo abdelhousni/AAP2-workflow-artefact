@@ -5,3 +5,6 @@
   tasks:
   - debug:
       var: original_payload
+  - ansible.builtin.set_stats: 
+      data:
+        generated_hostname: "{{ lookup('password', '/dev/null length=10 chars=ascii_lowercase,digits') }}"
