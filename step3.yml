@@ -1,6 +1,6 @@
 --- 
 - name: using input
-  hosts: all
+  hosts: localhost
   gather_facts: false
   tasks:
   - name: In memory inventory
@@ -9,10 +9,7 @@
       groups: temp_group
       ansible_connection: ssh
 
-- name: do something against the in memory inventory
-  hosts: temp_group
-  gather_facts: false
-  tasks:
   - name: Try to run something on the newly generated VM
     debug:
       msg: This is a test
+    delegate_to: temp_group
