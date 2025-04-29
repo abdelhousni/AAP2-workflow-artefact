@@ -5,7 +5,7 @@
   tasks:
   - name: In memory inventory
     ansible.builtin.add_host:
-      hostname: '{{ generated_hostname }}'
+      ansible_hostname: '{{ generated_hostname }}'
       name: new_machine
       ansible_connection: ssh
 
