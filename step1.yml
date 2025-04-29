@@ -8,4 +8,4 @@
   - ansible.builtin.set_stats: 
       data:
         original_payload: "{{ original_payload }}"
-        generated_hostname: "{{ lookup('password', '/dev/null length=10 chars=ascii_lowercase,digits') }}".labo.ovh
+        generated_hostname: "{{ lookup('password', '/dev/null length=10 chars=ascii_lowercase,digits') }}.labo.ovh"
