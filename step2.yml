@@ -4,6 +4,6 @@
   gather_facts: no
 
   tasks:
-    - name: Display all variables
+    - name: Display all vars for the host
       debug:
         var: hostvars[inventory_hostname]

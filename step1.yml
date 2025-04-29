@@ -4,9 +4,8 @@
   gather_facts: false
   tasks:
   - debug:
-      var: payload
+      var: payload_original
   - ansible.builtin.set_stats: 
       data:
-        payload:
-          extra:
-            generated_hostname: "{{ lookup('password', '/dev/null length=10 chars=ascii_lowercase,digits') }}.labo.ovh"
+        payload_extra:
+          generated_hostname: "{{ lookup('password', '/dev/null length=10 chars=ascii_lowercase,digits') }}.labo.ovh"
