@@ -22,17 +22,21 @@ payload_original:
   app: jboss
 ```
 
-The workflow has 3 steps / job templates chained together:
+The scope of those vars is the workflow. Those vars will survive for each step of the workflow (unless they are overriden or unset).
+
+The workflow has 3 steps (called "job templates") chained together:
 
 ### Step 1
 
-Takes the original input (extra vars), generate a random hostname, saving this extra info (called "artefacts") using the `set_stats` module. Once `set_stats` has been called, the vars are going to live for the duration of the workflow, you don't have to use set_stats at every steps of the workflow.
+This step receives the original vars passed to the workflow.
+
+I generate a random hostname and I save this extra info (called "artifacts" in the workflow output) using the `set_stats` module.
 
 ![](https://raw.githubusercontent.com/sebw/AAP2-workflow-artefact/refs/heads/master/step1.png)
 
 ### Step 2
 
-The vars and artefacts from the previous steps are now the extra vars for step 2. 
+The vars (passed to the workflow) and artefacts (created at step 1) are now the extra vars for step 2. 
 
 ```
 payload_extra:
@@ -46,33 +50,37 @@ payload_original:
 
 ![](https://raw.githubusercontent.com/sebw/AAP2-workflow-artefact/refs/heads/master/step2.png)
 
-This step just displays all the vars for you to play with.
-
+This step just displays all the vars for the host.
 
 ### Step 3
 
-We still have all the info (original + new data) as input.
+The vars are similar to step 2, we didn't change anything in the previous step.
 
-We store the new hostname created under step 1 in an "in memory inventory". 
+We use `generated_hostname` in a "in memory inventory" so we can act on that hostname without necessarily syncing with a dynamic inventory in AAP. 
 
-We can now run some automation against this temporary inventory.
+On the next step, we can target the in memory inventory to perform some tasks.
 
-### Next steps?
+### Next steps
 
 When the machine has been provisioned successfully, we can update our CMDB / real inventory.
 
-## Why not using a dynamic inventory?
+## Why not using a dynamic inventory in step 2?
 
-It is obviously possible to update the CMDB at the end of step 1.  
-In step 2, you need to refresh the inventory and limit the automation to the newly created machine.
+It is obviously possible to update the CMDB and dynamic inventory once the hostname has been generated.
 
-Overall this can add a few minutes to your worfklows, while in memory takes under 1 second.
+If you do that, you need to:
 
-In provisioning scenarios/workflows, I also believe it only makes sense to update the CMDB once the system is fully provisioned successfully.
+- refresh the inventory
+- run the next job template against that inventory with a limit on the newly create resource
 
-This prevents polluting the CMDB with bogus data if the provisioning fails.
+To me, this is:
 
+- time consuming: a dynamic inventory sync can take from seconds to minutes depending on the size of the inventory
+- risky: if you fail to set the limit properly, you might run a job template against incorrect machines or even the full inventory
 
+From a CMDB standpoint, I prefer updating the CMDB/inventory only when it makes sense. I want ot have the guarantee the new resource is compliant to the corporate standards before I add it to the CMDB.
+
+A workflow can fail in many ways at every step and I want to avoid potentially bogus or incomplete data in the CMDB.
 
 ## Want a demo?
 
